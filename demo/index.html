@@ -1,0 +1,57 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link type="text/css" rel="stylesheet" href="css3.css">
+</head>
+<body>
+    <div id="box" class="box"></div>
+    <button onclick="$('#box').addClass('corner')">圆角</button>
+    <button onclick="$('#box').addClass('shadow')">阴影</button>
+    <button onclick="$('#box').addClass('rg')">渐变</button>
+    <button onclick="$('#box').removeClass('a3').addClass('a1')">动画</button>
+    <button onclick="$('#box').removeClass().addClass('box')">复位</button>
+<hr/>
+    <p>让我们来做个实验：
+    <input id="maxVal" type="text" value="10000000000"></p>
+    <button onclick="die();">这边没有使用WebWorkers</button>
+    <button onclick="live();">这边用了WebWorkers</button>
+<hr/>
+    data1:<input id="data1" type="text"/><button onclick="setL();">set</button><button onclick="getL();">get</button>
+    data1:<input id="data2" type="text"/><button onclick="setS();">set</button><button onclick="getS();">get</button>
+</body>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript">
+function die(){
+    var j=0;
+    var num=parseInt($("#maxVal").val());
+    for(var i=0;i<num;i++){
+        j+=i;
+    }
+    alert(j);
+}
+
+function live(){
+    var worker=new Worker("worker.js");//建立线程
+    worker.onmessage=function(e){//线程消息监听
+        alert(e.data);
+    };
+    //穿入参数并启动线程
+    worker.postMessage(parseInt($("#maxVal").val()));
+}
+
+function setL(){
+    window.localStorage.setItem("data1",$("#data1").val());
+}
+function getL(){
+    alert(window.localStorage.getItem("data1"));
+}
+
+function setS(){
+    window.sessionStorage.setItem("data2",$("#data1").val());
+}
+function getS(){
+    alert(window.sessionStorage.getItem("data2"));
+}
+</script>
+</html>
