@@ -1,6 +1,3 @@
 [submodule "impress.js"]
 	path = impress.js
 	url = https://github.com/cookjs/impress.js
-[submodule "bootstrap"]
-	path = bsdemo/bootstrap
-	url = https://github.com/cookjs/bootstrap/dist
